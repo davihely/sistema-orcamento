@@ -29,8 +29,14 @@ class BD():
             
     def insert(self, values, table):
         try:
-            sql = "INSERT INTO " + table + " VALUES" + "('', " + "','".join(map(str, values)) + "'" + ")"
-            self.cursor.execute(sql)
+            value_string = ''
+            values.insert(0,'')
+            for x in values:
+                value_string += "%s,"
+            value_string = value_string[:-1]
+            sql = "INSERT INTO " + table + " VALUES" + "(" + value_string + ")"
+            val = tuple(values)
+            self.cursor.execute(sql, val)
             self.conn.commit()
             self.cursor.close()
             self.conn.close()
