@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import screens.ClientFormScreen as clientform
+import screens.ProductFormScreen as productform
 import database.connection as conection
 
 def clicar():
@@ -14,7 +15,7 @@ botao = tk.Button(root, text="Novo Cliente", command=lambda: clientform.ClientFo
 botao.config(height = 2, width = 12)
 botao.place(x=50,y=50)
 
-botao = tk.Button(root, text="Novo Produto/Serviço", command=clicar)
+botao = tk.Button(root, text="Novo Produto/Serviço", command=lambda: productform.ProductForm())
 botao.config(height = 2, width = 20)
 botao.place(x=160,y=50)
 

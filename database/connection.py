@@ -29,9 +29,8 @@ class BD():
             
     def insert(self, values, table):
         try:
-            sql = "INSERT INTO " + table + " VALUES (%s,%s, %s, %s, %s, %s, %s)"
-            val = (values)
-            self.cursor.execute(sql, val)
+            sql = "INSERT INTO " + table + " VALUES" + "('', " + "','".join(map(str, values)) + "'" + ")"
+            self.cursor.execute(sql)
             self.conn.commit()
             self.cursor.close()
             self.conn.close()

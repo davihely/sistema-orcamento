@@ -59,16 +59,14 @@ class ClientForm(tk.Toplevel):
                 for typedFilled in self.entryDict:
                     entryValue = typedFilled[0][0].get()
                     labelErrorFilled = list(typedFilled[0][1].values())[0]
+                    formObj = FormValidation(entryValue, labelErrorFilled)
                     match typedFilled[1]:
                             case 'cpfcnpj':
-                                cpfcnpjValid = FormValidation(entryValue, labelErrorFilled)
-                                cpfcnpjValid.validate_cpf_cnpj()
+                                cpfcnpjValid = formObj.validate_cpf_cnpj()
                             case 'tel':
-                                telValid = FormValidation(entryValue, labelErrorFilled)
-                                telValid.validate_tel()
+                                telValid = formObj.validate_tel()
                             case 'email':
-                                emailValidation = FormValidation(entryValue, labelErrorFilled)
-                                emailValidation.validate_email()
+                                emailValidation = formObj.validate_email()
                 if cpfcnpjValid and telValid and emailValidation:
                         self.get_values()    
                         return True    
