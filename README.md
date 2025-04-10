@@ -4,7 +4,7 @@ sistema de orçamentos usando crud
 
 ### 🔧 Tecnologias Utilizadas
 
-- Python
+- Python (POO)
 - Mysql 
 
 ### ✨ Funcionalidades
