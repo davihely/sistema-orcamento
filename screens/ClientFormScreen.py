@@ -2,8 +2,6 @@ import tkinter as tk
 from .Create import CreateFormInputs 
 from .Validation import FormValidation
 import models.Clients as clients
-from tkinter import ttk
-from tkinter import messagebox
        
 class ClientForm(tk.Toplevel):
     
@@ -38,7 +36,19 @@ class ClientForm(tk.Toplevel):
             },
             'estado_cliente': {
                 'fields': ['Estado', 'combo', 'regular', '14'],
-                'options': ["SP", "RJ", "MG", "ES", "RS", "PR", "SC", "BA", "PE", "CE", "GO"]
+                'options': [
+                    {"id": "1","name": "SP"}, 
+                    {"id": "2","name": "RJ"}, 
+                    {"id": "3","name": "MG"}, 
+                    {"id": "4","name": "ES"}, 
+                    {"id": "5","name": "RS"}, 
+                    {"id": "6","name": "PR"}, 
+                    {"id": "7","name": "SC"}, 
+                    {"id": "8","name":"BA"}, 
+                    {"id": "9","name":"PE"}, 
+                    {"id": "10","name": "CE"}, 
+                    {"id": "11","name": "GO"}
+                ]
             }
         }
                 

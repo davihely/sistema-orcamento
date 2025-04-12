@@ -7,6 +7,10 @@ class Client():
 
     def insertClient(self, insertData):
         self.bdconnection.insert(insertData, 'clientes')
+        
+    def listClients(self):
+        return self.bdconnection.list('clientes')
+        
 
     
     

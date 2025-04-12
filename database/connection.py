@@ -69,9 +69,10 @@ class BD():
             if condition:
                 sql = sql + condition
             self.cursor.execute(sql)
-            self.conn.commit()
+            records = self.cursor.fetchall()
             self.cursor.close()
             self.conn.close()
+            return records
         except mysql.connector.Error as error:
             print("Algo deu errado: {}".format(error))
     

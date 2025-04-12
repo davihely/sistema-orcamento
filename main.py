@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import screens.ClientFormScreen as clientform
 import screens.ProductFormScreen as productform
-import database.connection as conection
+import screens.OrcamentoFormScreen as orcamentoForm
 
 def clicar():
     botao.config(text="Botão pressionado!")
@@ -19,8 +19,8 @@ botao = tk.Button(root, text="Novo Produto/Serviço", command=lambda: productfor
 botao.config(height = 2, width = 20)
 botao.place(x=160,y=50)
 
-botao = tk.Button(root, text="Orçamento", command=clicar)
-botao.config(height = 2, width = 12)
+botao = tk.Button(root, text="Novo Orçamento", command=lambda: orcamentoForm.OrcamentoForm())
+botao.config(height = 2, width = 12)    
 botao.place(x=330,y=50)
 
 table = ttk.Treeview(root, columns = ('first', 'last', 'email'), show = 'headings')

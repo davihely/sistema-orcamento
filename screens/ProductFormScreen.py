@@ -29,7 +29,7 @@ class ProductForm(tk.Toplevel):
             },
             'categoria_produto': {
                 'fields': ['Categoria', 'combo', 'regular', '6'],
-                'options': ['Produto', 'Serviço']
+                'options': [{'id': '1', 'name': 'Produto'}, {'id': '2', 'name': 'Serviço'}]
             }
         }
                 

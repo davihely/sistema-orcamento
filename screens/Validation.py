@@ -44,6 +44,9 @@ class FormValidation():
             
     @staticmethod        
     def remove_label_error(value,label):
+            #index = value.current()
+            #id_escolhido = comboid[index]
+            #print(id_escolhido)
             if value:
                 label['foreground'] = 'black'
                 label['text'] = ''
