@@ -30,12 +30,12 @@ class FormValidation():
         return True
     
     @staticmethod 
-    def validate_only_numeric(value,label,entry):
+    def validate_only_numeric(value,label,widget):
         if value.isnumeric():
             FormValidation.remove_label_error(value,label)
         else:
             FormValidation.show_message(label, 'Digite apenas números', 'red')
-            entry.delete(len(value) - 1)
+            widget.delete(len(value) - 1)
     
     @staticmethod    
     def show_message(label, error, color):
@@ -44,9 +44,6 @@ class FormValidation():
             
     @staticmethod        
     def remove_label_error(value,label):
-            #index = value.current()
-            #id_escolhido = comboid[index]
-            #print(id_escolhido)
             if value:
                 label['foreground'] = 'black'
                 label['text'] = ''

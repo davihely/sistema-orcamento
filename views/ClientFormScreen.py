@@ -1,7 +1,7 @@
 import tkinter as tk
-from .Create import CreateFormInputs 
+from .make_auto_form import CreateFormInputs 
 from .Validation import FormValidation
-import models.Clients as clients
+import models.client_model as clients
        
 class ClientForm(tk.Toplevel):
     

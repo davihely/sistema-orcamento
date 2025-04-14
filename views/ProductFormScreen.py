@@ -1,7 +1,7 @@
 import tkinter as tk
-from .Create import CreateFormInputs 
+from .client_model_obj import CreateFormInputs 
 from .Validation import FormValidation
-import models.Products as products
+import models.product_model as products
 from tkinter import ttk
 from tkinter import messagebox
        

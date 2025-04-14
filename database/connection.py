@@ -38,8 +38,6 @@ class BD():
             val = tuple(values)
             self.cursor.execute(sql, val)
             self.conn.commit()
-            self.cursor.close()
-            self.conn.close()
         except mysql.connector.Error as error:
             print("Algo deu errado: {}".format(error))
     
