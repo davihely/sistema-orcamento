@@ -19,7 +19,7 @@ class BudgetItensController():
                 'fields': ['Valor Total Item:', 'string', 'regular', 4, 2]
             }
         }
-        self.auto_form_obj = AutoForm(window, self.budget_itens_form_fields)
+        self.window = window
         self.budget_itens_widgets_index = []
         self.number_of_itens = 0
         
@@ -39,20 +39,14 @@ class BudgetItensController():
         return products_dict
     
     def make_budget_item_form(self):
+        auto_form_obj = AutoForm(self.window, self.budget_itens_form_fields)
         if self.number_of_itens > 0:
             for key,value in self.budget_itens_form_fields.items():
                 self.budget_itens_form_fields[key]['fields'][3] = (2 * self.number_of_itens) + value['fields'][3]
-        self.budget_widgets_index = self.auto_form_obj.fields()
+        self.budget_widgets_index = auto_form_obj.fields()
         if self.budget_widgets_index:
             self.number_of_itens += 1 
-        self.budget_controller_obj.add_budget_itens(self.auto_form_obj)
-        
-    def validate_budget_item_form(self):
-        print('a')
-        widget_values = self.auto_form_obj.validate_form_fields()
-        if widget_values:
-            widget_values = self.auto_form_obj.get_final_values()
-            #self.budget_model_obj.insert_budget(widget_values)    
+        self.budget_controller_obj.add_budget_itens(auto_form_obj)
 
 
 

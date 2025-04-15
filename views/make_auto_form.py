@@ -23,7 +23,7 @@ class AutoForm():
             widget.grid(row=(value['fields'][3] + 1), column=value['fields'][4], padx=10, pady=2)
             
             label_error = ttk.Label(self.window, foreground='red')
-            label_error.grid(row=value['fields'][3], column=0, sticky='E', padx=5)
+            label_error.grid(row=value['fields'][3], column=value['fields'][4], sticky='E', padx=5)
             
             self.widget_list.append([widget,label_error,combo_ids])
         
@@ -31,7 +31,8 @@ class AutoForm():
             if value['fields'][2] == 'price':
                 action = "<KeyRelease>"
                 widget.bind(action, lambda event, label=label_error, widget=widget: FormValidation.validate_only_numeric(widget.get(),label,widget))
-
+        return True
+    
     def validate_form_fields(self):
         try:
             if all([bool(value[0].get()) == True for value in self.widget_list]):
@@ -42,6 +43,7 @@ class AutoForm():
             for typed in self.widget_list:
                     validationObj = FormValidation(typed[0].get(), typed[1])
                     validationObj.validate_empty()
+            return True
 
     def get_final_values(self):
         input_values = []

@@ -18,7 +18,6 @@ class BudgetController():
             }
         }
         self.auto_form_obj = AutoForm(window, self.budget_form_fields)
-        self.budget_widgets_ = []
         
     def get_clients_for_combo(self):
         clients_dict: dict = {}
@@ -36,17 +35,23 @@ class BudgetController():
         return clients_dict
     
     def make_budget_form(self):
-        self.budget_widgets_index = self.auto_form_obj.fields()
+        self.auto_form_obj.fields()
         
-    def validate_budget_form(self):
-        widget_values = self.auto_form_obj.validate_form_fields()
-        if widget_values:
+    def validate_budget_and_itens_form(self):
+        if self.auto_form_obj.validate_form_fields():
             widget_values = self.auto_form_obj.get_final_values()
-            self.budget_model_obj.insert_budget(widget_values)    
+            budget_last_id = self.budget_model_obj.insert_budget(widget_values)
+            if budget_last_id:
+                item_data = []
+                for auto_form_item in self.budget_itens:
+                    if auto_form_item.validate_form_fields():
+                        itens_values = auto_form_item.get_final_values()
+                        itens_values.append(budget_last_id)
+                        item_data.append(itens_values)  
+                self.budget_model_obj.insert_itens_budget(item_data)  
         
     def add_budget_itens(self, item):
         self.budget_itens.append(item)
-
         
 
         

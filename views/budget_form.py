@@ -18,7 +18,7 @@ class BudgetForm():
         
         BudgetItensForm(self.window,budget_controller_obj)
             
-        botao_salvar = tk.Button(self.window, text="Salvar Orçamento", command=lambda: budget_controller_obj.validate_budget_form())
+        botao_salvar = tk.Button(self.window, text="Salvar Orçamento", command=lambda: budget_controller_obj.validate_budget_and_itens_form())
         botao_salvar.grid(row=18, column=0, pady=20)  
         
 

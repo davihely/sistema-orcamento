@@ -38,6 +38,8 @@ class BD():
             val = tuple(values)
             self.cursor.execute(sql, val)
             self.conn.commit()
+            insert_id = self.cursor.lastrowid
+            return insert_id
         except mysql.connector.Error as error:
             print("Algo deu errado: {}".format(error))
     

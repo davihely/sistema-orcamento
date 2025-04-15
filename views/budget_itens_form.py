@@ -14,9 +14,6 @@ class BudgetItensForm():
         
         button_new_item = tk.Button(self.window, text="Novo Item", command=lambda: budget_itens_controller_obj.make_budget_item_form())
         button_new_item.grid(row=20, column=0, pady=20)     
-          
-        button_new_item2 = tk.Button(self.window, text="Novo Item", command=lambda: budget_itens_controller_obj.validate_budget_item_form())
-        button_new_item2.grid(row=25, column=0, pady=20)     
          
         
 
