@@ -10,13 +10,14 @@ class BudgetController():
         self.budget_model_obj = budget_model.BudgetModel()
         self.budget_form_fields = {
             'cliente_orcamento': {
-                'fields': ['Cliente:', 'combo', 'regular', 0, 0],
+                'fields': ['Cliente:', 'combo', 'regular', 0, 0, 'e'],
                 'options': self.get_clients_for_combo()
             },
             'valor_orcamento': {
-                'fields': ['Valor Total:', 'string', 'price', 2, 0]
+                'fields': ['Valor Total:', 'string', 'price', 2, 0, 'd']
             }
         }
+        self.each_item_dict = {}
         self.auto_form_obj = AutoForm(window, self.budget_form_fields)
         
     def get_clients_for_combo(self):
@@ -37,22 +38,37 @@ class BudgetController():
     def make_budget_form(self):
         self.auto_form_obj.fields()
         
-    def validate_budget_and_itens_form(self):
-        if self.auto_form_obj.validate_form_fields():
+    def validate_budget(self):
+        if self.auto_form_obj.validate_form_fields() and len(self.budget_itens):
             widget_values = self.auto_form_obj.get_final_values()
             budget_last_id = self.budget_model_obj.insert_budget(widget_values)
             if budget_last_id:
-                item_data = []
-                for auto_form_item in self.budget_itens:
-                    if auto_form_item.validate_form_fields():
-                        itens_values = auto_form_item.get_final_values()
-                        itens_values.append(budget_last_id)
-                        item_data.append(itens_values)  
-                self.budget_model_obj.insert_itens_budget(item_data)  
-        
+                self.validate_budget_itens(budget_last_id)
+                
+    def validate_budget_itens(self, budget_id):
+        item_data = []
+        for auto_form_item in self.budget_itens:
+            if not auto_form_item.validate_form_fields():
+                self.budget_model_obj.delete_budget(budget_id)
+                item_data.clear()
+                return False
+            itens_values = auto_form_item.get_final_values()
+            itens_values.append(budget_id)
+            item_data.append(itens_values)
+        self.budget_model_obj.insert_itens_budget(item_data)
+        return item_data
+            
     def add_budget_itens(self, item):
         self.budget_itens.append(item)
         
 
+    def set_total_value(self,index,item_price):
+        current_total_value = 0
+        self.each_item_dict[index] = float(item_price)
+        all_widgets = self.auto_form_obj.get_all_form_widgets()
         
+        current_total_value = sum(self.each_item_dict.values())
+                        
+        self.auto_form_obj.set_enable_insert_disabled(all_widgets[1][0], current_total_value)
         
+

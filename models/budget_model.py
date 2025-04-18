@@ -9,7 +9,12 @@ class BudgetModel():
         return self.bdconnection.insert(insert_data, 'orcamentos')
         
     def insert_itens_budget(self, insert_data):
+        tuple_insert = []
         for each in insert_data:
-            self.bdconnection.insert(each, 'orcamento_itens')
+            each.insert(0,'')
+            tuple_insert.append(tuple(each))
+            each.remove('')
+        self.bdconnection.insert_multiple_rows(tuple_insert, 'orcamento_itens')
         
-    
+    def delete_budget(self, id):
+        self.bdconnection.delete(id, 'id_orcamento', 'orcamentos')

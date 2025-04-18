@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-#import views.ClientFormScreen as clientform
-#import views.ProductFormScreen as productform
+from views.client_form import ClientForm
+from views.product_form import ProductForm
 from views.budget_form import BudgetForm
 
 def clicar():
@@ -11,16 +11,17 @@ root = Tk()
 root.geometry("1000x600") 
 root.title("Sistema")
 
-#botao = tk.Button(root, text="Novo Cliente", command=lambda: clientform.ClientForm(tk.Toplevel))
-#botao.config(height = 2, width = 12)
-#botao.place(x=50,y=50)
+botao = Button(root, text="Novo Cliente", command=lambda: ClientForm())
+botao.config(height = 2, width = 12) 
+botao.place(x=50,y=50) 
 
-#botao = tk.Button(root, text="Novo Produto/Serviço", command=lambda: productform.ProductForm())
-#botao.config(height = 2, width = 20) 
-#botao.place(x=160,y=50)
+botao = Button(root, text="Novo Produto", command=lambda: ProductForm())
+botao.config(height = 2, width = 12) 
+botao.place(x=160,y=50)
+
 botao = Button(root, text="Novo Orçamento", command=lambda: BudgetForm())
-botao.config(height = 2, width = 12)    
-botao.place(x=330,y=50)
+botao.config(height = 2, width = 14)    
+botao.place(x=270,y=50)
 
 table = ttk.Treeview(root, columns = ('first', 'last', 'email'), show = 'headings')
 table.heading('first', text = 'First name')

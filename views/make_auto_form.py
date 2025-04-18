@@ -11,10 +11,12 @@ class AutoForm():
     def fields(self):
         for key,value in self.form_dict.items(): 
             tk.Label(self.window,text=value['fields'][0], anchor="w").grid(row=value['fields'][3],column=value['fields'][4],sticky="w",padx=10,pady=(10, 0))
-            
             action = "<Key>"
+            var = ''
+            combo_ids = ''
             if value['fields'][1] == 'string':
-                widget = tk.Entry(self.window,width=40)
+                var = tk.StringVar()
+                widget = tk.Entry(self.window,width=40,textvariable=var)
             elif value['fields'][1] == 'combo':
                 action = "<<ComboboxSelected>>"
                 widget = ttk.Combobox(self.window,values=value['options']['names'],width=37,state="readonly")   
@@ -25,11 +27,18 @@ class AutoForm():
             label_error = ttk.Label(self.window, foreground='red')
             label_error.grid(row=value['fields'][3], column=value['fields'][4], sticky='E', padx=5)
             
-            self.widget_list.append([widget,label_error,combo_ids])
-        
+            self.widget_list.append([widget,label_error,combo_ids,var])
+
+            match value['fields'][5]:
+                case 'e':
+                    widget.config(state='normal')
+                case 'd':
+                    widget.config(state='disabled')
+            
             widget.bind(action, lambda event, label=label_error,widget=widget: FormValidation.remove_label_error(widget,label))
+            
             if value['fields'][2] == 'price':
-                action = "<KeyRelease>"
+                action = "<KeyRelease>" 
                 widget.bind(action, lambda event, label=label_error, widget=widget: FormValidation.validate_only_numeric(widget.get(),label,widget))
         return True
     
@@ -43,7 +52,7 @@ class AutoForm():
             for typed in self.widget_list:
                     validationObj = FormValidation(typed[0].get(), typed[1])
                     validationObj.validate_empty()
-            return True
+            return False
 
     def get_final_values(self):
         input_values = []
@@ -59,3 +68,21 @@ class AutoForm():
             index = combo.current()
             id_choosen = ids[index]
             return id_choosen
+        
+    def get_current_widget(self):
+        return self.window.focus_get()
+    
+    def get_all_form_widgets(self):
+        return self.widget_list
+    
+    def set_widget_value(self,widget,value):
+        widget.delete(0,'end')
+        widget.insert(0, value)
+        
+    def set_bind(self,action,widget,function):
+        widget.bind(action, lambda event: self.window.after(1, lambda: function()))
+        
+    def set_enable_insert_disabled(self, widget, value):
+        widget.config(state="normal")
+        self.set_widget_value(widget,value)
+        widget.config(state="disabled")

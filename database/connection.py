@@ -38,6 +38,21 @@ class BD():
             val = tuple(values)
             self.cursor.execute(sql, val)
             self.conn.commit()
+            values.remove('')
+            insert_id = self.cursor.lastrowid
+            return insert_id
+        except mysql.connector.Error as error:
+            print("Algo deu errado: {}".format(error))
+    
+    def insert_multiple_rows(self, values, table):
+        try:
+            value_string = ''
+            for x in values[0]:
+                value_string += "%s,"
+            value_string = value_string[:-1]
+            sql = "INSERT INTO " + table + " VALUES" + "(" + value_string + ")"
+            self.cursor.executemany(sql, values)
+            self.conn.commit()
             insert_id = self.cursor.lastrowid
             return insert_id
         except mysql.connector.Error as error:
@@ -53,13 +68,12 @@ class BD():
         except mysql.connector.Error as error:
             print("Algo deu errado: {}".format(error))
         
-    def delete(self ,table ,id ,fieldId):
+    def delete(self ,id ,fieldId, table):
         try:
-            sql = "DELETE * FROM " + table + " WHERE " + fieldId + " + " + id 
-            self.cursor.execute(sql)
+            sql = "DELETE FROM " + table + " WHERE " + fieldId + " = %s"
+            val = (id,)
+            self.cursor.execute(sql,val)
             self.conn.commit()
-            self.cursor.close()
-            self.conn.close()
         except mysql.connector.Error as error:
             print("Algo deu errado: {}".format(error))
         
